@@ -1,4 +1,4 @@
-# Vigía Hogar
+# Home Guardian
 
 Copia independiente del proyecto original, con Angular 20 y una interfaz orientada a detectar humo y fuego en interiores. El backend Flask, sus modelos y su lógica de inferencia se conservan sin cambios.
 
