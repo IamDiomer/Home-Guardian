@@ -1,0 +1,516 @@
+:host {
+  --tinta: #2c302b;
+  --tinta-suave: #5b5143;
+  --fondo: #faf9f6;
+  --superficie: #ffffff;
+  --borde: #deded3;
+  --acento: #b8482d;
+  --acento-suave: #f6e9df;
+  --radio: 14px;
+
+  display: block;
+  min-height: 100%;
+  background: var(--fondo);
+  color: var(--tinta);
+}
+
+.pagina {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* ---------- Encabezado ---------- */
+
+.encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.encabezado h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.encabezado p {
+  margin: 0;
+  color: var(--tinta-suave);
+  max-width: 60ch;
+}
+
+/* ---------- Rejilla ---------- */
+
+.rejilla {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.tarjeta-carga {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.columna-resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+/* ---------- Tarjetas (PrimeNG) ---------- */
+
+:host ::ng-deep p-card.tarjeta,
+:host ::ng-deep .tarjeta .p-card,
+:host ::ng-deep .tarjeta.p-card {
+  --p-card-background: var(--superficie);
+  --p-card-color: var(--tinta);
+  --p-card-subtitle-color: var(--tinta-suave);
+  --p-card-border-radius: var(--radio);
+  --p-card-shadow: none;
+  --p-card-body-padding: 0;
+  --p-card-body-gap: 0;
+  --p-card-caption-gap: 0;
+  background: var(--superficie) !important;
+  color: var(--tinta) !important;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: 0 1px 2px rgba(28, 39, 51, 0.04);
+  overflow: hidden;
+}
+
+/* Botón principal y de elegir archivo con el color de acento */
+:host ::ng-deep .p-button:not(.p-button-text):not(.p-button-secondary) {
+  --p-button-primary-background: var(--acento);
+  --p-button-primary-border-color: var(--acento);
+  --p-button-primary-color: #ffffff;
+  --p-button-primary-hover-background: #95391f;
+  --p-button-primary-hover-border-color: #95391f;
+  --p-button-primary-hover-color: #ffffff;
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-button:not(.p-button-text):not(.p-button-secondary):hover:not(:disabled) {
+  background: #95391f;
+  border-color: #95391f;
+}
+
+:host ::ng-deep .p-button:disabled {
+  background: #c9d1da;
+  border-color: #c9d1da;
+  color: #6b7886;
+  opacity: 1;
+}
+
+/* Componentes internos en tema claro */
+:host ::ng-deep .p-tag,
+:host ::ng-deep .p-chip {
+  --p-chip-background: #eef2f6;
+  --p-chip-color: var(--tinta);
+}
+
+:host ::ng-deep .p-divider {
+  --p-divider-border-color: var(--borde);
+}
+
+:host ::ng-deep .p-progressbar {
+  --p-progressbar-background: #e8edf2;
+  --p-progressbar-value-background: var(--acento);
+}
+
+:host ::ng-deep .p-skeleton {
+  --p-skeleton-background: #e8edf2;
+}
+
+:host ::ng-deep .tarjeta .p-card-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+:host ::ng-deep .tarjeta .p-card-content {
+  padding: 0;
+}
+
+.tarjeta-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.tarjeta-cabecera > i {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-size: 1.1rem;
+}
+
+.tarjeta-cabecera h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.tarjeta-cabecera span {
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+}
+
+/* ---------- Carga de archivo ---------- */
+
+:host ::ng-deep .p-fileupload {
+  border: none;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-header,
+:host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
+  padding: 0 0 0.75rem;
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-content {
+  padding: 0;
+  border: 1.5px dashed var(--borde);
+  border-radius: 12px;
+  background: #fafbfc;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-content.p-fileupload-highlight {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+}
+
+.vacio-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+
+.vacio-carga i {
+  font-size: 2rem;
+  color: var(--acento);
+}
+
+.vacio-carga p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.archivo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem;
+}
+
+:host ::ng-deep .archivo-miniatura {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--borde);
+}
+
+.archivo-datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.archivo-datos strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.92rem;
+}
+
+.archivo-datos span {
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+
+:host ::ng-deep .mensaje {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+:host ::ng-deep .boton-detectar,
+:host ::ng-deep .boton-detectar .p-button {
+  width: 100%;
+}
+
+:host ::ng-deep .boton-detectar .p-button {
+  justify-content: center;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+}
+
+/* ---------- Resultados ---------- */
+
+.contenedor-imagen {
+  display: flex;
+  justify-content: center;
+  background: #f6f5f1;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .contenedor-imagen .p-image {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+:host ::ng-deep .imagen-resultado {
+  display: block;
+  max-width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.metrica {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1rem;
+  background: #fafbfc;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+.metrica span {
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+
+.metrica strong {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.clases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.lista-objetos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.objeto-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.objeto-fila strong {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+/* ---------- Estados vacíos ---------- */
+
+.estado-inicial,
+.sin-detecciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+}
+
+.estado-inicial i,
+.sin-detecciones i {
+  font-size: 2.25rem;
+  color: var(--acento);
+}
+
+.estado-inicial h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--tinta);
+}
+
+.estado-inicial p,
+.sin-detecciones p {
+  margin: 0;
+  max-width: 40ch;
+}
+
+.sin-detecciones {
+  padding: 1.5rem 1rem;
+}
+
+.esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.esqueleto-fila {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .rejilla {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta-carga {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .pagina {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .metricas {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   Corrección de tema: colores explícitos (independientes del
+   modo claro/oscuro de PrimeNG)
+   ========================================================= */
+
+/* Zona de carga */
+:host ::ng-deep .p-fileupload,
+:host ::ng-deep .p-fileupload-advanced,
+:host ::ng-deep .p-fileupload .p-fileupload-header,
+:host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
+  background: transparent !important;
+  color: var(--tinta) !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-content {
+  background: #fafbfc !important;
+  color: var(--tinta) !important;
+  border: 1.5px dashed #c9d3de !important;
+  border-radius: 12px;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-content.p-fileupload-highlight {
+  background: var(--acento-suave) !important;
+  border-color: var(--acento) !important;
+}
+
+.archivo-datos strong,
+.vacio-carga p {
+  color: var(--tinta);
+}
+
+.archivo-datos span {
+  color: var(--tinta-suave);
+}
+
+/* Etiquetas de estado y confianza */
+:host ::ng-deep .p-tag {
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-tag.p-tag-success {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+:host ::ng-deep .p-tag.p-tag-warn,
+:host ::ng-deep .p-tag.p-tag-warning {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+:host ::ng-deep .p-tag.p-tag-danger {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+/* Chips */
+:host ::ng-deep .p-chip {
+  background: #eef2f6 !important;
+  color: var(--tinta) !important;
+}
+
+/* Botón secundario (quitar imagen) */
+:host ::ng-deep .p-button.p-button-text.p-button-secondary {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--tinta-suave) !important;
+}
+
+:host ::ng-deep .p-button.p-button-text.p-button-secondary:hover {
+  background: #eef2f6 !important;
+}
+
+/* Barras de progreso y mensajes */
+:host ::ng-deep .p-progressbar {
+  background: #e8edf2 !important;
+}
+
+:host ::ng-deep .p-progressbar .p-progressbar-value {
+  background: var(--acento) !important;
+}
+
+:host ::ng-deep .p-message {
+  color: #991b1b;
+}
+
+/* Texto general de las tarjetas */
+:host ::ng-deep .tarjeta .p-card-body,
+:host ::ng-deep .tarjeta .p-card-content,
+:host ::ng-deep .tarjeta h2,
+:host ::ng-deep .tarjeta strong {
+  color: var(--tinta);
+}
+
+:host ::ng-deep .tarjeta .tarjeta-cabecera span,
+:host ::ng-deep .metrica span {
+  color: var(--tinta-suave);
+}

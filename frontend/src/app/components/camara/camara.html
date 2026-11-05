@@ -1,0 +1,147 @@
+<p-toast position="top-right" styleClass="hogar-confirmaciones" />
+<div class="pagina pagina-camara">
+ <header class="encabezado"><div><h1>Cámara y detecciones</h1></div>
+ @if (activo) { <p-tag severity="success" icon="pi pi-circle-fill" value="Cámara en vivo" /> }
+ @else { <p-tag severity="secondary" icon="pi pi-pause-circle" value="Cámara detenida" /> }
+ </header>
+ <section class="barra-captura" aria-label="Controles de cámara">
+  <div class="elegir-camara"><label for="selectorCamara"><i class="pi pi-video" aria-hidden="true"></i> Fuente de cámara</label>
+  <p-select inputId="selectorCamara" [options]="opcionesCamara" [(ngModel)]="camaraSeleccionada" optionLabel="label" optionValue="value" placeholder="Cámara predeterminada" emptyMessage="Sin cámaras disponibles" panelStyleClass="panel-camaras" [disabled]="iniciando" (onChange)="cambiarCamara()" />
+  </div>
+  <div class="acciones-camara">
+   @if (!activo) { <p-button label="Iniciar cámara" icon="pi pi-video" [loading]="iniciando" [disabled]="iniciando" (onClick)="iniciarCamara()" /> }
+   @else { <p-button label="Detener cámara" icon="pi pi-stop-circle" severity="danger" (onClick)="detenerCamara()" /> }
+   <p-button label="Guardar resultado" icon="pi pi-save" [outlined]="true" [loading]="guardando" [disabled]="!imagenResultado || guardando" (onClick)="guardarDeteccion()" />
+  </div>
+ </section>
+ <div class="comparacion-camara">
+  <p-card class="tarjeta tarjeta-preview">
+   <ng-template pTemplate="header"><div class="tarjeta-cabecera"><i class="pi pi-video" aria-hidden="true"></i><div><h2>Vista previa en vivo</h2></div></div></ng-template>
+   <div class="pantalla-preview" [class.preview-activa]="activo">
+    <video #video class="video-preview" [class.video-visible]="activo" autoplay [muted]="true" playsinline aria-label="Vista previa de la cámara en vivo"></video>
+    @if (!activo) { <div class="preview-vacia"><i class="pi pi-video" aria-hidden="true"></i><h3>{{ iniciando ? 'Conectando con la cámara…' : 'Tu cámara aparecerá aquí' }}</h3><p>{{ iniciando ? 'Concede el permiso de cámara en el navegador.' : 'Elige una cámara y pulsa Iniciar cámara.' }}</p></div> }
+   </div>
+   <canvas #canvas hidden></canvas>
+  </p-card>
+  <p-card class="tarjeta tarjeta-deteccion">
+   <ng-template pTemplate="header"><div class="tarjeta-cabecera"><i class="pi pi-eye" aria-hidden="true"></i><div><h2>Resultado de la detección</h2><span>{{ activo ? 'Último fotograma analizado por el modelo.' : imagenResultado ? 'Último resultado conservado. Cámara detenida.' : 'La imagen procesada se mostrará aquí.' }}</span></div></div></ng-template>
+   <div class="pantalla-resultado">
+    @if (imagenResultado) { <img [src]="imagenResultado" alt="Fotograma analizado con regiones y etiquetas de detección" /> }
+    @else { <div class="preview-vacia"><i [class]="activo ? 'pi pi-spin pi-spinner' : 'pi pi-eye'" aria-hidden="true"></i><h3>{{ activo ? 'Analizando fotogramas…' : 'Esperando el análisis' }}</h3><p>{{ activo ? 'El resultado aparecerá cuando el servidor procese el fotograma.' : 'Inicia la cámara para ver las detecciones a su lado.' }}</p></div> }
+   </div>
+   @if (imagenResultado) { <div class="resumen-en-vivo"><ng-container *ngTemplateOutlet="detalle; context: { $implicit: resumen }" /></div> }
+  </p-card>
+ </div>
+  <!-- Detecciones guardadas: imagen y debajo su detalle -->
+  @if (imagenesGuardadas.length > 0) {
+    <p-card class="tarjeta tarjeta-historial">
+      <ng-template pTemplate="header">
+        <div class="tarjeta-cabecera">
+          <i class="pi pi-images"></i>
+          <div>
+            <h2>Detecciones guardadas</h2>
+            <span>{{ imagenesGuardadas.length }} {{ imagenesGuardadas.length === 1 ? 'imagen guardada' : 'imágenes guardadas' }}</span>
+          </div>
+          <p-button
+            class="cabecera-total"
+            styleClass="btn-vaciar"
+            label="Vaciar historial"
+            icon="pi pi-trash"
+            severity="secondary"
+            [text]="true"
+            size="small"
+            (onClick)="vaciarHistorial()"
+          />
+        </div>
+      </ng-template>
+
+      <div class="galeria">
+        @for (item of imagenesGuardadas; track item.archivo) {
+          <article class="guardada">
+            <div class="guardada-imagen">
+              <p-image
+                [src]="item.url"
+                [alt]="item.archivo"
+                [preview]="true"
+                imageClass="miniatura"
+              />
+            </div>
+
+            <div class="guardada-cuerpo">
+              <div class="guardada-titulo">
+                <div>
+                  <strong [title]="item.archivo">{{ item.archivo }}</strong>
+                  <small>{{ item.fecha }}</small>
+                </div>
+                <a
+                  class="btn-descarga"
+                  [href]="item.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.download]="item.archivo"
+                >
+                  <i class="pi pi-download"></i> Descargar
+                </a>
+              </div>
+
+              <ng-container *ngTemplateOutlet="detalle; context: { $implicit: item.resumen }" />
+            </div>
+          </article>
+        }
+      </div>
+    </p-card>
+  }
+</div>
+
+<!-- Detalle reutilizable: métricas, clases y lista con confianza -->
+<ng-template #detalle let-r>
+  <div class="metricas">
+    <div class="metrica">
+      <span>Detecciones</span>
+      <strong>{{ r.total }}</strong>
+    </div>
+    <div class="metrica">
+      <span>Clases distintas</span>
+      <strong>{{ r.clases.length }}</strong>
+    </div>
+    <div class="metrica">
+      <span>Confianza media</span>
+      <strong>{{ r.confianzaMedia }}%</strong>
+    </div>
+  </div>
+
+  @if (r.clases.length > 0) {
+    <div class="clases">
+      @for (clase of r.clases; track clase.nombre) {
+        <p-chip [label]="clase.nombre + ' × ' + clase.cantidad" icon="pi pi-tag" />
+      }
+    </div>
+
+    <p-divider />
+
+    <ul class="lista-objetos">
+      @for (objeto of r.objetos; track $index) {
+        <li class="objeto">
+          <div class="objeto-fila">
+            <strong>{{ objeto.nombre }}</strong>
+            <p-tag
+              [value]="(objeto.confianza | number: '1.0-2') + '%'"
+              [severity]="severidad(objeto.confianza)"
+              [rounded]="true"
+            />
+          </div>
+          <p-progressBar
+            [value]="objeto.confianza"
+            [showValue]="false"
+            [style]="{ height: '6px' }"
+          />
+        </li>
+      }
+    </ul>
+  } @else {
+    <div class="sin-detecciones">
+      <i class="pi pi-search"></i>
+      <p>No se encontraron detecciones con la confianza mínima configurada.</p>
+    </div>
+  }
+</ng-template>

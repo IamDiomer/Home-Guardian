@@ -1,0 +1,204 @@
+<p-toast position="top-right" styleClass="hogar-confirmaciones" />
+
+<div class="pagina pagina-imagen">
+  <header class="encabezado">
+    <div>
+      <h1>Análisis de imagen</h1>
+      
+    </div>
+
+    @if (imagenResultado) {
+      <p-tag severity="success" icon="pi pi-check-circle" value="Análisis completado" />
+    }
+  </header>
+
+  <div class="rejilla">
+    <!-- Columna izquierda: carga -->
+    <p-card class="tarjeta tarjeta-carga">
+      <ng-template pTemplate="header">
+        <div class="tarjeta-cabecera">
+          <i class="pi pi-image"></i>
+          <div>
+            <h2>Imagen original</h2>
+            <span>JPG, PNG o WEBP · máximo 10 MB</span>
+          </div>
+        </div>
+      </ng-template>
+
+      @if (urlOriginal) {
+        <div class="original-grande"><p-image [src]="urlOriginal" alt="Fotografía original, sin anotaciones" [preview]="true" imageClass="imagen-original-grande" /></div>
+      }
+
+      <p-fileupload
+        #cargador
+        name="imagen"
+        accept="image/*"
+        [maxFileSize]="10485760"
+        [multiple]="false"
+        [customUpload]="true"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        chooseLabel="Elegir imagen"
+        chooseIcon="pi pi-folder-open"
+        invalidFileTypeMessageSummary="Tipo de archivo no válido."
+        invalidFileTypeMessageDetail="Selecciona una imagen JPG, PNG o WEBP."
+        invalidFileSizeMessageSummary="Archivo demasiado grande."
+        invalidFileSizeMessageDetail="El tamaño máximo es 10 MB."
+        (onSelect)="seleccionarImagen($event)"
+      >
+        <ng-template pTemplate="content">
+          @if (archivo && urlOriginal) {
+            <div class="archivo">
+              <i class="pi pi-image archivo-icono" aria-hidden="true"></i>
+              <div class="archivo-datos">
+                <strong [title]="archivo.name">{{ archivo.name }}</strong>
+                <span>{{ tamanoArchivo }}</span>
+              </div>
+              <p-button
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                ariaLabel="Quitar imagen"
+                (onClick)="quitarImagen(cargador)"
+              />
+            </div>
+          } @else {
+            <div class="vacio-carga">
+              <i class="pi pi-cloud-upload"></i>
+              <p>Arrastra una imagen aquí o usa el botón para elegirla.</p>
+            </div>
+          }
+        </ng-template>
+      </p-fileupload>
+
+      @if (mensajeError) {
+        <p-message severity="error" [text]="mensajeError" styleClass="mensaje" />
+      }
+
+      <ng-template pTemplate="footer">
+        <p-button
+          class="boton-detectar"
+          styleClass="w-full"
+          [label]="cargando ? 'Analizando imagen…' : 'Analizar imagen'"
+          icon="pi pi-search"
+          [loading]="cargando"
+          [disabled]="!archivo || cargando"
+          (onClick)="detectar()"
+        />
+      </ng-template>
+    </p-card>
+
+    <!-- Columna derecha: resultados -->
+    <div class="columna-resultados">
+      @if (cargando) {
+        <p-card class="tarjeta">
+          <p-progressBar mode="indeterminate" [style]="{ height: '4px' }" />
+          <div class="esqueleto">
+            <p-skeleton width="100%" height="18rem" borderRadius="12px" />
+            <div class="esqueleto-fila">
+              <p-skeleton width="30%" height="2.5rem" />
+              <p-skeleton width="30%" height="2.5rem" />
+              <p-skeleton width="30%" height="2.5rem" />
+            </div>
+            <p-skeleton width="100%" height="3.5rem" />
+            <p-skeleton width="100%" height="3.5rem" />
+          </div>
+        </p-card>
+      } @else if (imagenResultado) {
+        <p-card class="tarjeta">
+          <ng-template pTemplate="header">
+            <div class="tarjeta-cabecera">
+              <i class="pi pi-eye"></i>
+              <div>
+                <h2>Imagen procesada</h2>
+                <span>Regiones detectadas y etiquetas del modelo.</span>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="contenedor-imagen">
+            <p-image
+              [src]="imagenResultado"
+              alt="Imagen con regiones detectadas"
+              [preview]="true"
+              imageClass="imagen-resultado"
+            />
+          </div>
+        </p-card>
+
+        <p-card class="tarjeta">
+          <ng-template pTemplate="header">
+            <div class="tarjeta-cabecera">
+              <i class="pi pi-objects-column"></i>
+              <div>
+                <h2>Detecciones del modelo</h2>
+                <span>Detecciones ordenadas por nivel de confianza.</span>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="metricas">
+            <div class="metrica">
+              <span>Detecciones</span>
+              <strong>{{ total }}</strong>
+            </div>
+            <div class="metrica">
+              <span>Clases distintas</span>
+              <strong>{{ clases.length }}</strong>
+            </div>
+            <div class="metrica">
+              <span>Confianza media</span>
+              <strong>{{ confianzaMedia }}%</strong>
+            </div>
+          </div>
+
+          @if (clases.length > 0) {
+            <div class="clases">
+              @for (clase of clases; track clase.nombre) {
+                <p-chip [label]="clase.nombre + ' × ' + clase.cantidad" icon="pi pi-tag" />
+              }
+            </div>
+          }
+
+          <p-divider />
+
+          @if (objetosOrdenados.length > 0) {
+            <ul class="lista-objetos">
+              @for (objeto of objetosOrdenados; track $index) {
+                <li class="objeto">
+                  <div class="objeto-fila">
+                    <strong>{{ objeto.nombre }}</strong>
+                    <p-tag
+                      [value]="objeto.confianza + '%'"
+                      [severity]="severidad(objeto.confianza)"
+                      [rounded]="true"
+                    />
+                  </div>
+                  <p-progressBar
+                    [value]="objeto.confianza"
+                    [showValue]="false"
+                    [style]="{ height: '6px' }"
+                  />
+                </li>
+              }
+            </ul>
+          } @else {
+            <div class="sin-detecciones">
+              <i class="pi pi-search"></i>
+              <p>No se encontraron detecciones con la confianza mínima configurada. Prueba con otra imagen.</p>
+            </div>
+          }
+        </p-card>
+      } @else {
+        <p-card class="tarjeta">
+          <div class="estado-inicial">
+            <i class="pi pi-sparkles"></i>
+            <h2>Resultado del análisis</h2>
+            <p>Selecciona tu imagen a la izquierda y pulsa «Analizar imagen».</p>
+          </div>
+        </p-card>
+      }
+    </div>
+  </div>
+</div>

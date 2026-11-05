@@ -1,0 +1,180 @@
+@import "primeicons/primeicons.css";
+*{box-sizing:border-box}html{color-scheme:light;scroll-padding-top:125px}body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#faf9f6;color:#242424;font-size:16px}:focus-visible{outline:3px solid #ba6440;outline-offset:3px}::selection{background:#edc4ab;color:#442919}@media(max-width:1100px){html{scroll-padding-top:195px}}
+:root app-camara .pagina{padding:0;max-width:1240px}
+:root app-camara .encabezado{padding-bottom:22px;border-bottom:1px solid #d8d0c7;margin-bottom:27px}
+:root app-camara .encabezado h1{font-size:34px;font-weight:700;letter-spacing:-.7px;color:#242424}
+:root app-camara .encabezado p{font-size:17px;color:#51483e;line-height:1.8}
+:root app-camara .tarjeta .p-card{border:1px solid #d5cbbc!important;border-top:4px solid #ab3925!important;border-radius:10px;box-shadow:0 4px 14px #4b321208}
+:root app-camara .tarjeta-cabecera{background:#fff9f2;border-bottom:1px solid #dfd1be;border-radius:7px 7px 0 0;padding:22px 24px}
+:root app-camara .tarjeta-cabecera h2{font-size:19px;font-weight:700;color:#383027}
+:root app-camara .tarjeta-cabecera span{font-size:14px;line-height:1.8;color:#5d5143}
+:root app-camara .tarjeta-cabecera>i{color:#a44f2c;font-size:24px}
+:root app-camara .metrica{background:#f7f1e7;border:1px solid #e0d4c2;border-radius:7px}
+:root app-camara .metrica span{font-size:14px;color:#5b5143}
+:root app-camara .metrica strong{font-size:30px;color:#8c4025;font-weight:650}
+:root app-camara .p-button{font-size:16px;font-weight:650;border-radius:6px;padding:.85rem 1.2rem;box-shadow:none!important}
+:root app-camara .p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-danger):not(:disabled){background:#ab3925!important;border-color:#ab3925!important;color:white!important}
+:root app-camara .p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-danger):hover:not(:disabled){background:#862b1b!important;border-color:#862b1b!important}
+:root app-camara .p-button.p-button-outlined{background:white!important;border:1px solid #b29b82!important;color:#715236!important}
+:root app-camara .p-button:disabled{background:#e6e1d8!important;border-color:#d1c7b9!important;color:#686055!important;opacity:1}
+:root app-camara .p-button:focus-visible{outline:3px solid #ba6440!important;outline-offset:3px;box-shadow:none!important}
+:root app-camara .controles .p-button{height:auto;min-height:48px}
+:root app-camara .selector label{font-size:16px;font-weight:600;color:#4a4034}
+:root app-camara .selector small{font-size:14px;color:#615343;line-height:1.7}
+:root app-camara .p-select{font-size:16px;border-radius:6px}
+:root app-camara .p-select-label{color:#443c32!important}
+:root app-camara .p-chip{font-size:14px;color:#3f382f!important;border-radius:5px}
+:root app-camara .p-tag{font-size:14px;font-weight:600;border-radius:5px}
+:root app-camara .visor{background:#f8f4ec;border-color:#c6b79f;border-radius:8px}
+:root app-camara .visor.visor-activo{background:#252a26;border-color:#252a26}
+:root app-camara .visor-estado h3{font-size:22px;color:#443a2d}
+:root app-camara .visor-estado p{font-size:16px;line-height:1.8;color:#625442}
+:root app-camara .visor-estado i{color:#95724e}
+:root app-camara .estado-inicial h2{font-size:24px;font-weight:650;color:#4b3e2d}
+:root app-camara .estado-inicial p{font-size:16px;line-height:1.8;color:#65543e}
+:root app-camara .vacio-carga p{font-size:16px;line-height:1.8;color:#5f513f}
+:root app-camara .sin-detecciones p{font-size:16px;line-height:1.8;color:#5f513f}
+:root app-camara .archivo-datos span{font-size:14px;color:#625542}
+:root app-camara .guardada-titulo small{font-size:14px;color:#5f5341}
+:root app-camara .btn-descarga{font-size:15px}
+:root app-camara .objeto-fila strong{font-size:17px;color:#3f3529}
+:root app-camara .p-message{font-size:15px}
+:root app-camara .tarjeta-objetos{top:130px}
+:root app-camara .tarjeta-carga{top:130px}
+:root app-imagen .pagina{padding:0;max-width:1240px}
+:root app-imagen .encabezado{padding-bottom:22px;border-bottom:1px solid #d8d0c7;margin-bottom:27px}
+:root app-imagen .encabezado h1{font-size:34px;font-weight:700;letter-spacing:-.7px;color:#242424}
+:root app-imagen .encabezado p{font-size:17px;color:#51483e;line-height:1.8}
+:root app-imagen .tarjeta .p-card{border:1px solid #d5cbbc!important;border-top:4px solid #ab3925!important;border-radius:10px;box-shadow:0 4px 14px #4b321208}
+:root app-imagen .tarjeta-cabecera{background:#fff9f2;border-bottom:1px solid #dfd1be;border-radius:7px 7px 0 0;padding:22px 24px}
+:root app-imagen .tarjeta-cabecera h2{font-size:19px;font-weight:700;color:#383027}
+:root app-imagen .tarjeta-cabecera span{font-size:14px;line-height:1.8;color:#5d5143}
+:root app-imagen .tarjeta-cabecera>i{color:#a44f2c;font-size:24px}
+:root app-imagen .metrica{background:#f7f1e7;border:1px solid #e0d4c2;border-radius:7px}
+:root app-imagen .metrica span{font-size:14px;color:#5b5143}
+:root app-imagen .metrica strong{font-size:30px;color:#8c4025;font-weight:650}
+:root app-imagen .p-button{font-size:16px;font-weight:650;border-radius:6px;padding:.85rem 1.2rem;box-shadow:none!important}
+:root app-imagen .p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-danger):not(:disabled){background:#ab3925!important;border-color:#ab3925!important;color:white!important}
+:root app-imagen .p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-danger):hover:not(:disabled){background:#862b1b!important;border-color:#862b1b!important}
+:root app-imagen .p-button.p-button-outlined{background:white!important;border:1px solid #b29b82!important;color:#715236!important}
+:root app-imagen .p-button:disabled{background:#e6e1d8!important;border-color:#d1c7b9!important;color:#686055!important;opacity:1}
+:root app-imagen .p-button:focus-visible{outline:3px solid #ba6440!important;outline-offset:3px;box-shadow:none!important}
+:root app-imagen .controles .p-button{height:auto;min-height:48px}
+:root app-imagen .selector label{font-size:16px;font-weight:600;color:#4a4034}
+:root app-imagen .selector small{font-size:14px;color:#615343;line-height:1.7}
+:root app-imagen .p-select{font-size:16px;border-radius:6px}
+:root app-imagen .p-select-label{color:#443c32!important}
+:root app-imagen .p-chip{font-size:14px;color:#3f382f!important;border-radius:5px}
+:root app-imagen .p-tag{font-size:14px;font-weight:600;border-radius:5px}
+:root app-imagen .visor{background:#f8f4ec;border-color:#c6b79f;border-radius:8px}
+:root app-imagen .visor.visor-activo{background:#252a26;border-color:#252a26}
+:root app-imagen .visor-estado h3{font-size:22px;color:#443a2d}
+:root app-imagen .visor-estado p{font-size:16px;line-height:1.8;color:#625442}
+:root app-imagen .visor-estado i{color:#95724e}
+:root app-imagen .estado-inicial h2{font-size:24px;font-weight:650;color:#4b3e2d}
+:root app-imagen .estado-inicial p{font-size:16px;line-height:1.8;color:#65543e}
+:root app-imagen .vacio-carga p{font-size:16px;line-height:1.8;color:#5f513f}
+:root app-imagen .sin-detecciones p{font-size:16px;line-height:1.8;color:#5f513f}
+:root app-imagen .archivo-datos span{font-size:14px;color:#625542}
+:root app-imagen .guardada-titulo small{font-size:14px;color:#5f5341}
+:root app-imagen .btn-descarga{font-size:15px}
+:root app-imagen .objeto-fila strong{font-size:17px;color:#3f3529}
+:root app-imagen .p-message{font-size:15px}
+:root app-imagen .tarjeta-objetos{top:130px}
+:root app-imagen .tarjeta-carga{top:130px}
+
+:root .p-toast{top:125px}:root .p-toast-summary{font-size:17px;font-weight:650}:root .p-toast-detail{font-size:15px;line-height:1.8;overflow-wrap:anywhere}:root .p-toast-message{border-radius:8px;box-shadow:0 6px 25px #33281520}@media(max-width:1100px){:root .p-toast{top:190px}:root app-camara .tarjeta-objetos,:root app-imagen .tarjeta-carga{top:200px}}@media(max-width:650px){:root app-camara .encabezado h1,:root app-imagen .encabezado h1{font-size:29px}:root app-camara .encabezado p,:root app-imagen .encabezado p{font-size:16px}:root .p-toast{width:calc(100vw - 32px);right:16px;top:195px}}
+
+/* Side-by-side camera workspace and image comparison. */
+:root app-camara .barra-captura{display:flex;justify-content:space-between;align-items:end;gap:24px;padding:24px;background:#fff;border:1px solid #d4c6b3;border-radius:10px;margin-bottom:26px;box-shadow:0 3px 12px #60402108}
+:root app-camara .elegir-camara{display:flex;flex-direction:column;gap:12px;min-width:260px;flex:1;max-width:420px}
+:root app-camara .elegir-camara label{display:flex;gap:9px;align-items:center;font-size:17px;font-weight:650;color:#4b3d2d}
+:root app-camara .elegir-camara .p-select{width:100%;min-height:48px}
+:root app-camara .acciones-camara{display:flex;gap:14px;flex-wrap:wrap}
+:root app-camara .acciones-camara .p-button{min-height:48px}
+:root app-camara .comparacion-camara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:start}
+:root app-camara .comparacion-camara>p-card{min-width:0;display:block}
+:root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{position:relative;aspect-ratio:4/3;min-height:260px;background:#f4f0e7;border:1px solid #d9cab6;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+:root app-camara .pantalla-preview.preview-activa,:root app-camara .pantalla-resultado:has(img){background:#202622;border-color:#202622}
+:root app-camara .video-preview{display:block;visibility:hidden;width:100%;height:100%;position:absolute;inset:0;object-fit:contain;background:#202622}
+:root app-camara .video-preview.video-visible{visibility:visible}
+:root app-camara .pantalla-resultado>img{width:100%;height:100%;position:absolute;inset:0;object-fit:contain}
+:root app-camara .preview-vacia{position:relative;text-align:center;padding:28px;max-width:440px}
+:root app-camara .preview-vacia>i{font-size:38px;color:#97754b;margin-bottom:14px}
+:root app-camara .preview-vacia h3{font-size:22px;font-weight:650;line-height:1.4;color:#4b3d2c;margin:0 0 12px}
+:root app-camara .preview-vacia p{font-size:16px;line-height:1.8;color:#64533d;margin:0}
+:root app-camara .nota-preview{display:flex;gap:9px;align-items:start;line-height:1.8;font-size:14px;color:#65533d;margin:18px 0 0}
+:root app-camara .nota-preview i{margin-top:5px}
+:root app-camara .resumen-en-vivo{padding-top:22px;margin-top:22px;border-top:1px solid #e2d3be}
+:root app-camara .resumen-en-vivo .metricas{gap:10px}
+:root app-camara .resumen-en-vivo .metrica{padding:15px 10px;min-width:0}
+:root app-camara .resumen-en-vivo .metrica span{font-size:14px}
+:root app-camara .resumen-en-vivo .lista-objetos{max-height:380px;overflow:auto}
+:root app-camara .tarjeta-historial{margin-top:30px}
+:root app-imagen .rejilla{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:start}
+:root app-imagen .tarjeta-carga{position:static;min-width:0}
+:root app-imagen .columna-resultados{gap:26px;min-width:0}
+:root app-imagen .original-grande{border:1px solid #d5c7b4;border-radius:8px;background:#eee9df;margin-bottom:20px;overflow:hidden}
+:root app-imagen .original-grande .p-image{display:block;width:100%}
+:root app-imagen .imagen-original-grande{display:block;width:100%;height:340px;object-fit:contain;background:#eee9df}
+:root app-imagen .contenedor-imagen{border:1px solid #d5c7b4;border-radius:8px;background:#eee9df;overflow:hidden}
+:root app-imagen .contenedor-imagen .p-image{display:block;width:100%}
+:root app-imagen .imagen-resultado{display:block;width:100%;height:340px;object-fit:contain}
+:root app-imagen .archivo{border:1px solid #ddcfba;border-radius:6px;background:#fbf7f0;padding:14px;gap:12px;min-width:0}
+:root app-imagen .archivo-icono{font-size:24px;color:#a0532e}
+:root app-imagen .archivo-datos{min-width:0}
+:root app-imagen .archivo-datos strong{font-size:16px}
+:root app-imagen .vacio-carga{padding:45px 24px;background:#fbf6ed;border:2px dashed #cdb696;border-radius:8px}
+:root app-imagen .vacio-carga>i{font-size:42px;color:#a56b39}
+:root app-imagen .vacio-carga p{font-size:18px;color:#5a4630;max-width:330px;margin:18px auto 0}
+:root app-imagen .estado-inicial{min-height:365px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#f7f4ed;border:1px solid #ded0b9;border-radius:8px;padding:32px;text-align:center}
+:root app-imagen .estado-inicial>i{font-size:42px;color:#a9804d;margin-bottom:16px}
+:root app-imagen .estado-inicial h2{font-size:25px;line-height:1.4;margin:0 0 14px}
+:root app-imagen .estado-inicial p{font-size:17px;line-height:1.8;max-width:370px;margin:0}
+:root app-imagen .boton-detectar .p-button{width:100%;min-height:48px}
+@media(max-width:1000px){:root app-camara .barra-captura{align-items:stretch;flex-direction:column}:root app-camara .elegir-camara{max-width:none}:root app-camara .acciones-camara{display:grid;grid-template-columns:1fr 1fr}:root app-camara .acciones-camara .p-button{width:100%}}
+@media(max-width:850px){:root app-camara .comparacion-camara,:root app-imagen .rejilla{grid-template-columns:1fr}:root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{aspect-ratio:16/10}:root app-imagen .imagen-original-grande,:root app-imagen .imagen-resultado{height:auto;max-height:450px}}
+@media(max-width:580px){:root app-camara .barra-captura{padding:18px}:root app-camara .acciones-camara{grid-template-columns:1fr}:root app-camara .elegir-camara{min-width:0}:root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{min-height:220px;aspect-ratio:4/3}:root app-camara .preview-vacia{padding:20px}:root app-camara .preview-vacia h3{font-size:20px}:root app-camara .preview-vacia p{font-size:15px}:root app-imagen .estado-inicial{min-height:280px;padding:24px}}
+
+/* Give the comparison panels priority within the viewport. */
+:root app-camara .encabezado,:root app-imagen .encabezado{align-items:center;padding-bottom:12px;margin-bottom:16px;gap:10px}
+:root app-camara .encabezado h1,:root app-imagen .encabezado h1{font-size:29px;line-height:1.2;margin:0}
+:root app-camara .barra-captura{padding:14px 18px;gap:18px;margin-bottom:18px;align-items:center}
+:root app-camara .elegir-camara{flex-direction:row;align-items:center;gap:12px;max-width:520px;min-width:0}
+:root app-camara .elegir-camara label{font-size:15px;white-space:nowrap}
+:root app-camara .elegir-camara .p-select{flex:1;min-width:180px;min-height:44px;width:auto}
+:root app-camara .acciones-camara{gap:10px}
+:root app-camara .acciones-camara .p-button{min-height:44px;padding:10px 15px}
+:root app-camara .comparacion-camara,:root app-imagen .rejilla{gap:20px}
+:root app-camara .tarjeta-cabecera,:root app-imagen .tarjeta-cabecera{padding:14px 18px;gap:12px}
+:root app-camara .tarjeta-cabecera h2,:root app-imagen .tarjeta-cabecera h2{font-size:18px;line-height:1.35;margin:0}
+:root app-camara .tarjeta-cabecera span,:root app-imagen .tarjeta-cabecera span{line-height:1.5}
+:root app-camara .tarjeta .p-card-body,:root app-imagen .tarjeta .p-card-body{padding:16px 18px}
+:root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{aspect-ratio:16/10;min-height:230px}
+:root app-camara .resumen-en-vivo{padding-top:16px;margin-top:16px}
+:root app-camara .resumen-en-vivo .metrica{padding:10px}
+:root app-camara .resumen-en-vivo .metrica strong{font-size:27px}
+:root app-camara .tarjeta-historial{margin-top:22px}
+:root app-imagen .estado-inicial{min-height:300px;padding:24px}
+:root app-imagen .vacio-carga{padding:30px 20px}
+:root app-imagen .original-grande{margin-bottom:16px}
+:root app-imagen .columna-resultados{gap:20px}
+:root app-imagen .tarjeta-carga,:root app-camara .tarjeta-objetos{top:105px}
+:root .p-toast{top:100px}
+@media(max-width:1100px){:root app-imagen .tarjeta-carga,:root app-camara .tarjeta-objetos{top:170px}:root .p-toast{top:165px}}
+@media(max-width:1000px){:root app-camara .barra-captura{flex-direction:column;align-items:stretch}:root app-camara .elegir-camara{max-width:none}:root app-camara .acciones-camara{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){:root app-camara .encabezado h1,:root app-imagen .encabezado h1{font-size:25px}:root app-camara .barra-captura{padding:13px;gap:12px}:root app-camara .elegir-camara{flex-direction:column;align-items:stretch;gap:8px}:root app-camara .elegir-camara .p-select{width:100%;min-width:0}:root app-camara .acciones-camara{grid-template-columns:1fr;gap:9px}:root app-camara .tarjeta .p-card-body,:root app-imagen .tarjeta .p-card-body{padding:14px}:root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{min-height:200px}:root .p-toast{top:170px}}
+
+/* Success confirmations: clean card with a distinct confirmation badge. */
+:root .hogar-confirmaciones.p-toast{width:440px;max-width:calc(100vw - 32px);right:24px}
+:root .hogar-confirmaciones .p-toast-message-success{background:#fffefb;border:1px solid #d8e3d7;border-left:5px solid #4d7c56;border-radius:12px;color:#264831;box-shadow:0 14px 40px #26352624;backdrop-filter:none;overflow:hidden}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-content{display:flex;align-items:flex-start;gap:14px;padding:20px 18px}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-icon{display:block;box-sizing:border-box;flex:0 0 42px;width:42px;height:42px;padding:10px;background:#e7f2e6;border:1px solid #c7dfc5;border-radius:50%;color:#3b7547;margin-top:1px}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-text{margin:0;min-width:0;flex:1}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-summary{font-size:17px;line-height:1.4;font-weight:700;color:#2c4530;letter-spacing:-.15px}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-detail{font-size:15px;line-height:1.7;font-weight:400;color:#4f5c4c;margin:7px 0 0;overflow-wrap:anywhere}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-close-button{width:28px;height:28px;flex:0 0 28px;border:1px solid #e2e7dd;background:#f5f7f0;border-radius:6px;color:#6c7865;margin:0}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-close-button:hover{background:#e9efdf;color:#354e31}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-close-button:focus-visible{outline:3px solid #557c4e;outline-offset:3px}
+:root .hogar-confirmaciones .p-toast-message-success .p-toast-close-icon{width:12px;height:12px}
+@media(max-width:580px){:root .hogar-confirmaciones.p-toast{right:16px;width:calc(100vw - 32px)}:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-content{padding:17px 14px;gap:11px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-icon{flex-basis:36px;width:36px;height:36px;padding:8px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-summary{font-size:16px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-detail{font-size:14px}}

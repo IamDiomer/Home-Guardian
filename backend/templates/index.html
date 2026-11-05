@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detección de objetos con YOLOv8</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1d4ed8;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .selector-modo {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        button.activo {
+            background: #15803d;
+        }
+
+        .seccion {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #00000012;
+        }
+
+        .oculto {
+            display: none !important;
+        }
+
+        input[type="file"],
+        select {
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            margin: 12px 0;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            background: white;
+        }
+
+        .controles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .mensaje {
+            margin-top: 12px;
+            color: #475569;
+            overflow-wrap: anywhere;
+        }
+
+        .estado {
+            padding: 10px;
+            background: #eff6ff;
+            border-radius: 7px;
+        }
+
+        .imagen-resultado {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 15px auto;
+            border-radius: 8px;
+        }
+
+        .video-contenedor {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: #111827;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+        }
+
+        .video-contenedor video,
+        .video-contenedor canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-contenedor video {
+            z-index: 1;
+        }
+
+        .video-contenedor canvas {
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .seccion {
+                padding: 15px;
+            }
+
+            .selector-modo button {
+                width: 100%;
+            }
+
+            .controles button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="contenedor">
+
+    <h1>Detección de objetos con YOLOv8</h1>
+
+    <!-- SELECCIÓN DEL MODO -->
+    <div class="selector-modo">
+        <button
+            id="btnModoImagen"
+            class="activo"
+            type="button"
+            onclick="MostrarModo('imagen')">
+            Detección con imagen
+        </button>
+
+        <button
+            id="btnModoCamara"
+            type="button"
+            onclick="MostrarModo('camara')">
+            Detección con cámara
+        </button>
+    </div>
+
+    <!-- DETECCIÓN CON IMÁGENES -->
+    <section id="seccionImagen" class="seccion">
+
+        <h2>Detección con imagen</h2>
+
+        <p>Selecciona una imagen para detectar los objetos.</p>
+
+        <form id="formImagen">
+            <input
+                type="file"
+                id="fileInput"
+                name="imagen"
+                accept="image/*"
+                required>
+
+            <button type="submit" id="btnDetectarImagen">
+                Detectar objetos
+            </button>
+        </form>
+
+        <p id="mensajeImagen" class="mensaje"></p>
+
+        <div id="resultadoImagen" class="oculto">
+            <h3>Imagen procesada</h3>
+
+            <img
+                id="imagenDetectada"
+                class="imagen-resultado"
+                alt="Imagen con objetos detectados">
+
+            <p id="totalImagen"></p>
+            <ul id="listaImagen"></ul>
+            <p id="archivoImagen" class="mensaje"></p>
+        </div>
+
+    </section>
+
+    <!-- DETECCIÓN CON CÁMARA -->
+    <section id="seccionCamara" class="seccion oculto">
+
+        <h2>Detección con cámara</h2>
+
+        <label for="selectorCamara">Seleccionar cámara:</label>
+
+        <select id="selectorCamara">
+            <option value="">Pulsa actualizar cámaras</option>
+        </select>
+
+        <div class="controles">
+
+            <button
+                type="button"
+                id="btnActualizarCamaras"
+                onclick="ListarCamaras()">
+                Actualizar cámaras
+            </button>
+
+            <button
+                type="button"
+                id="btnIniciarCamara"
+                onclick="IniciarCamara()">
+                Iniciar cámara
+            </button>
+
+            <button
+                type="button"
+                id="btnDetenerCamara"
+                onclick="DetenerCamara()"
+                disabled>
+                Detener cámara
+            </button>
+
+        </div>
+
+        <p id="mensajeCamara" class="mensaje estado">
+            Selecciona una cámara y pulsa Iniciar cámara.
+        </p>
+
+        <!-- ÚNICA VISTA DE LA CÁMARA Y DETECCIONES -->
+        <div class="video-contenedor">
+
+            <video
+                id="camara"
+                autoplay
+                playsinline
+                muted>
+            </video>
+
+            <canvas id="canvasDeteccion"></canvas>
+
+        </div>
+
+        <canvas id="canvasCaptura" class="oculto"></canvas>
+
+    </section>
+
+</div>
+
+<script>
+    const seccionImagen = document.getElementById("seccionImagen");
+    const seccionCamara = document.getElementById("seccionCamara");
+
+    const btnModoImagen = document.getElementById("btnModoImagen");
+    const btnModoCamara = document.getElementById("btnModoCamara");
+
+    const selectorCamara = document.getElementById("selectorCamara");
+    const video = document.getElementById("camara");
+
+    const canvasCaptura = document.getElementById("canvasCaptura");
+    const canvasDeteccion = document.getElementById("canvasDeteccion");
+
+    const contextoDeteccion = canvasDeteccion.getContext("2d");
+
+    let flujoCamara = null;
+    let camaraActiva = false;
+    let procesandoFotograma = false;
+    let numeroSesion = 0;
+
+    let temporizadorDeteccion = null;
+
+    // CAMBIAR ENTRE IMÁGENES Y CÁMARA
+    function MostrarModo(modo) {
+        if (modo === "imagen") {
+            DetenerCamara();
+
+            seccionImagen.classList.remove("oculto");
+            seccionCamara.classList.add("oculto");
+
+            btnModoImagen.classList.add("activo");
+            btnModoCamara.classList.remove("activo");
+        } else {
+            seccionImagen.classList.add("oculto");
+            seccionCamara.classList.remove("oculto");
+
+            btnModoImagen.classList.remove("activo");
+            btnModoCamara.classList.add("activo");
+
+            ListarCamaras();
+        }
+    }
+
+    // MOSTRAR RESULTADOS DE IMÁGENES
+    function MostrarObjetos(objetos) {
+        const lista = document.getElementById("listaImagen");
+        const total = document.getElementById("totalImagen");
+
+        lista.innerHTML = "";
+        total.textContent = "Total de objetos: " + objetos.length;
+
+        if (objetos.length === 0) {
+            lista.textContent = "No se detectaron objetos.";
+            return;
+        }
+
+        objetos.forEach(objeto => {
+            const elemento = document.createElement("li");
+
+            elemento.textContent =
+                objeto.nombre + " - " +
+                objeto.confianza + "% de confianza";
+
+            lista.appendChild(elemento);
+        });
+    }
+
+    // DETECCIÓN CON IMAGEN SUBIDA
+    document.getElementById("formImagen").addEventListener(
+        "submit",
+        async function(evento) {
+            evento.preventDefault();
+
+            const archivo =
+                document.getElementById("fileInput").files[0];
+
+            const mensaje =
+                document.getElementById("mensajeImagen");
+
+            const boton =
+                document.getElementById("btnDetectarImagen");
+
+            if (!archivo) {
+                mensaje.textContent = "Selecciona una imagen primero.";
+                return;
+            }
+
+            const datos = new FormData();
+            datos.append("imagen", archivo);
+
+            boton.disabled = true;
+            mensaje.textContent = "Detectando objetos...";
+
+            try {
+                const respuesta = await fetch("/detectar", {
+                    method: "POST",
+                    body: datos
+                });
+
+                const resultado = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    throw new Error(
+                        resultado.error || "Error al procesar la imagen."
+                    );
+                }
+
+                document.getElementById("imagenDetectada").src =
+                    "data:image/jpeg;base64," + resultado.imagen;
+
+                MostrarObjetos(resultado.objetos);
+
+                document.getElementById("resultadoImagen")
+                    .classList.remove("oculto");
+
+                document.getElementById("archivoImagen").textContent =
+                    resultado.archivo
+                    ? "Imagen guardada en static/resultados/" +
+                      resultado.archivo
+                    : "";
+
+                mensaje.textContent = "Detección completada.";
+
+            } catch (error) {
+                mensaje.textContent = "Error: " + error.message;
+            } finally {
+                boton.disabled = false;
+            }
+        }
+    );
+
+    // BUSCAR LAS CÁMARAS DISPONIBLES
+    async function ListarCamaras() {
+        if (camaraActiva) return;
+
+        const mensaje = document.getElementById("mensajeCamara");
+
+        try {
+            if (!navigator.mediaDevices ||
+                !navigator.mediaDevices.getUserMedia) {
+                throw new Error(
+                    "Abre la página mediante localhost o HTTPS."
+                );
+            }
+
+            // Solicitar permiso para conocer los nombres de las cámaras.
+            const flujoTemporal =
+                await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                });
+
+            flujoTemporal.getTracks().forEach(pista => pista.stop());
+
+            const dispositivos =
+                await navigator.mediaDevices.enumerateDevices();
+
+            const camaras = dispositivos.filter(
+                dispositivo => dispositivo.kind === "videoinput"
+            );
+
+            const seleccionAnterior = selectorCamara.value;
+
+            selectorCamara.innerHTML = "";
+
+            if (camaras.length === 0) {
+                selectorCamara.add(new Option(
+                    "No se encontraron cámaras", ""
+                ));
+
+                mensaje.textContent = "No se encontraron cámaras.";
+                return;
+            }
+
+            camaras.forEach((camara, indice) => {
+                const opcion = new Option(
+                    camara.label || "Cámara " + (indice + 1),
+                    camara.deviceId
+                );
+
+                selectorCamara.add(opcion);
+            });
+
+            if (camaras.some(
+                camara => camara.deviceId === seleccionAnterior
+            )) {
+                selectorCamara.value = seleccionAnterior;
+            }
+
+            mensaje.textContent =
+                "Selecciona una cámara y pulsa Iniciar cámara.";
+
+        } catch (error) {
+            mensaje.textContent =
+                "No se pudieron listar las cámaras: " + error.message;
+        }
+    }
+
+    // INICIAR LA CÁMARA
+    async function IniciarCamara() {
+        if (camaraActiva) return;
+
+        const mensaje = document.getElementById("mensajeCamara");
+
+        try {
+            if (!navigator.mediaDevices ||
+                !navigator.mediaDevices.getUserMedia) {
+                throw new Error(
+                    "El navegador no permite acceder a la cámara."
+                );
+            }
+
+            mensaje.textContent = "Iniciando cámara...";
+
+            // Si aún no hay una cámara seleccionada, pedir permiso y listar.
+            if (!selectorCamara.value) {
+                await ListarCamaras();
+            }
+
+            const idCamara = selectorCamara.value;
+
+            if (!idCamara) {
+                throw new Error("No hay una cámara seleccionada.");
+            }
+
+            flujoCamara = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    deviceId: { exact: idCamara }
+                },
+                audio: false
+            });
+
+            video.srcObject = flujoCamara;
+            await video.play();
+
+            camaraActiva = true;
+            procesandoFotograma = false;
+
+            numeroSesion++;
+            const sesionActual = numeroSesion;
+
+            selectorCamara.disabled = true;
+
+            document.getElementById("btnActualizarCamaras").disabled = true;
+            document.getElementById("btnIniciarCamara").disabled = true;
+            document.getElementById("btnDetenerCamara").disabled = false;
+
+            // Ajustar la detección al tamaño real de la cámara.
+            canvasDeteccion.width = video.videoWidth;
+            canvasDeteccion.height = video.videoHeight;
+
+            mensaje.textContent = "Cámara activa. Detectando objetos...";
+
+            ProcesarCamara(sesionActual);
+
+        } catch (error) {
+            DetenerCamara();
+
+            mensaje.textContent =
+                "No se pudo iniciar la cámara: " + error.message;
+        }
+    }
+
+    // ENVIAR FOTOGRAMAS A FLASK Y DIBUJAR LA DETECCIÓN
+    async function ProcesarCamara(sesionActual) {
+        if (!camaraActiva ||
+            sesionActual !== numeroSesion ||
+            procesandoFotograma) {
+            return;
+        }
+
+        if (video.readyState < 2 ||
+            video.videoWidth === 0 ||
+            video.videoHeight === 0) {
+            temporizadorDeteccion = setTimeout(
+                () => ProcesarCamara(sesionActual), 200
+            );
+            return;
+        }
+
+        procesandoFotograma = true;
+
+        try {
+            canvasCaptura.width = video.videoWidth;
+            canvasCaptura.height = video.videoHeight;
+
+            const contexto = canvasCaptura.getContext("2d");
+
+            contexto.drawImage(
+                video,
+                0,
+                0,
+                canvasCaptura.width,
+                canvasCaptura.height
+            );
+
+            const blob = await new Promise(resolve => {
+                canvasCaptura.toBlob(
+                    resolve,
+                    "image/jpeg",
+                    0.75
+                );
+            });
+
+            if (!blob) {
+                throw new Error("No se pudo capturar el fotograma.");
+            }
+
+            const datos = new FormData();
+            datos.append("imagen", blob, "fotograma.jpg");
+
+            const respuesta = await fetch("/detectar_camara", {
+                method: "POST",
+                body: datos
+            });
+
+            const resultado = await respuesta.json();
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    resultado.error || "Error en la detección."
+                );
+            }
+
+            if (!camaraActiva || sesionActual !== numeroSesion) {
+                return;
+            }
+
+            // Mostrar los recuadros sobre la misma vista del video.
+            const imagenDetectada = new Image();
+
+            imagenDetectada.src =
+                "data:image/jpeg;base64," + resultado.imagen;
+
+            await new Promise((resolve, reject) => {
+                imagenDetectada.onload = resolve;
+                imagenDetectada.onerror = reject;
+            });
+
+            if (!camaraActiva || sesionActual !== numeroSesion) {
+                return;
+            }
+
+            if (
+                canvasDeteccion.width !== imagenDetectada.naturalWidth ||
+                canvasDeteccion.height !== imagenDetectada.naturalHeight
+            ) {
+                canvasDeteccion.width = imagenDetectada.naturalWidth;
+                canvasDeteccion.height = imagenDetectada.naturalHeight;
+            }
+
+            contextoDeteccion.clearRect(
+                0,
+                0,
+                canvasDeteccion.width,
+                canvasDeteccion.height
+            );
+
+            contextoDeteccion.drawImage(
+                imagenDetectada,
+                0,
+                0,
+                canvasDeteccion.width,
+                canvasDeteccion.height
+            );
+
+            document.getElementById("mensajeCamara").textContent =
+                "Cámara activa. Detectando objetos...";
+
+        } catch (error) {
+            if (camaraActiva && sesionActual === numeroSesion) {
+                document.getElementById("mensajeCamara").textContent =
+                    "Error de detección: " + error.message;
+            }
+        } finally {
+            procesandoFotograma = false;
+
+            if (camaraActiva && sesionActual === numeroSesion) {
+                // Pausa breve para no saturar el servidor.
+                temporizadorDeteccion = setTimeout(
+                    () => ProcesarCamara(sesionActual),
+                    100
+                );
+            }
+        }
+    }
+
+    // DETENER LA CÁMARA
+    function DetenerCamara() {
+        camaraActiva = false;
+        numeroSesion++;
+
+        if (temporizadorDeteccion !== null) {
+            clearTimeout(temporizadorDeteccion);
+            temporizadorDeteccion = null;
+        }
+
+        if (flujoCamara) {
+            flujoCamara.getTracks().forEach(pista => pista.stop());
+            flujoCamara = null;
+        }
+
+        video.srcObject = null;
+
+        contextoDeteccion.clearRect(
+            0,
+            0,
+            canvasDeteccion.width,
+            canvasDeteccion.height
+        );
+
+        selectorCamara.disabled = false;
+
+        document.getElementById("btnActualizarCamaras").disabled = false;
+        document.getElementById("btnIniciarCamara").disabled = false;
+        document.getElementById("btnDetenerCamara").disabled = true;
+
+        document.getElementById("mensajeCamara").textContent =
+            "Cámara detenida.";
+
+        procesandoFotograma = false;
+    }
+
+    // CARGAR CÁMARAS AL ABRIR LA PÁGINA
+    document.addEventListener("DOMContentLoaded", function() {
+        // La lista se actualizará al entrar al modo cámara.
+    });
+</script>
+
+</body>
+</html>
