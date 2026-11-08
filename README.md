@@ -21,7 +21,7 @@ npm ci
 npm start
 ```
 
-Abre http://localhost:4200. La API utiliza http://127.0.0.1:5000. Ejecuta el backend desde su carpeta para que encuentre best2.pt.
+Abre http://localhost:4200. La API utiliza http://127.0.0.1:5000. Ejecuta el backend desde su carpeta para que encuentre best.pt.
 
 ## Funciones conservadas
 
