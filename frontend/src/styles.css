@@ -178,3 +178,24 @@
 :root .hogar-confirmaciones .p-toast-message-success .p-toast-close-button:focus-visible{outline:3px solid #557c4e;outline-offset:3px}
 :root .hogar-confirmaciones .p-toast-message-success .p-toast-close-icon{width:12px;height:12px}
 @media(max-width:580px){:root .hogar-confirmaciones.p-toast{right:16px;width:calc(100vw - 32px)}:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-content{padding:17px 14px;gap:11px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-message-icon{flex-basis:36px;width:36px;height:36px;padding:8px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-summary{font-size:16px}:root .hogar-confirmaciones .p-toast-message-success .p-toast-detail{font-size:14px}}
+
+/* Mobile camera: constrain actual content instead of clipping the right edge. */
+@media(max-width:850px){
+ :root app-camara{min-width:0;max-width:100%}
+ :root app-camara .comparacion-camara{grid-template-columns:minmax(0,1fr)}
+ :root app-camara .comparacion-camara>p-card,:root app-camara .comparacion-camara .p-card,:root app-camara .comparacion-camara .p-card-body,:root app-camara .comparacion-camara .p-card-content{min-width:0;max-width:100%;width:100%}
+ :root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{min-width:0;max-width:100%;width:100%}
+ :root app-camara .preview-vacia{min-width:0;max-width:100%;width:100%;overflow-wrap:anywhere}
+ :root app-camara .preview-vacia h3,:root app-camara .preview-vacia p{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+ :root app-camara .tarjeta-cabecera>div{min-width:0}
+ :root app-camara .tarjeta-cabecera h2,:root app-camara .tarjeta-cabecera span{white-space:normal;overflow-wrap:anywhere}
+ :root app-camara .tarjeta-cabecera>i{flex-shrink:0}
+}
+@media(max-width:580px){
+ :root app-camara .pantalla-preview,:root app-camara .pantalla-resultado{aspect-ratio:auto;min-height:220px}
+ :root app-camara .pantalla-preview.preview-activa,:root app-camara .pantalla-resultado:has(img){aspect-ratio:4/3;min-height:0}
+ :root app-camara .preview-vacia{padding:20px 16px}
+ :root app-camara .galeria{grid-template-columns:minmax(0,1fr)}
+ :root app-camara .guardada,:root app-camara .guardada-cuerpo{min-width:0;max-width:100%}
+ :root app-camara .guardada-titulo{flex-wrap:wrap}
+}

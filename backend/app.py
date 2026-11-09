@@ -15,7 +15,8 @@ CORS(app, resources={
     r"/*": {
         "origins": [
             "http://localhost:4200",
-            "http://127.0.0.1:4200"
+            "http://127.0.0.1:4200",
+            "https://7rhrqpxn-4200.brs.devtunnels.ms"
         ]
     }
 })
