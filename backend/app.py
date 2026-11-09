@@ -37,7 +37,7 @@ os.makedirs(carpeta_resultados, exist_ok=True)
 def inicio():
     return jsonify({
         "estado": "activo",
-        "mensaje": "API de detección YOLOv8",
+        "mensaje": "API de deteccion YOLOv8",
         "endpoints": [
             "/api/estado",
             "/detectar",
