@@ -139,6 +139,10 @@
   padding: 0;
 }
 
+:host ::ng-deep .tarjeta-carga .p-card-body {
+  gap: 20px;
+}
+
 .tarjeta-cabecera {
   display: flex;
   align-items: center;
@@ -177,28 +181,30 @@
 
 :host ::ng-deep .p-fileupload .p-fileupload-header,
 :host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
-  padding: 0 0 0.75rem;
+  padding: 0 0 1rem;
   background: transparent;
   border: none;
 }
 
 :host ::ng-deep .p-fileupload .p-fileupload-content {
   padding: 0;
-  border: 1.5px dashed var(--borde);
-  border-radius: 12px;
-  background: #fafbfc;
-  transition: border-color 0.2s, background 0.2s;
+  border: none !important;
+  background: transparent !important;
+  color: var(--tinta);
 }
 
-:host ::ng-deep .p-fileupload .p-fileupload-content.p-fileupload-highlight {
-  border-color: var(--acento);
-  background: var(--acento-suave);
+:host ::ng-deep .p-fileupload-content.p-fileupload-highlight .vacio-carga,
+:host ::ng-deep .p-fileupload-content.p-fileupload-highlight .archivo {
+  border-color: var(--acento) !important;
+  background: var(--acento-suave) !important;
 }
 
 .vacio-carga {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 280px;
   gap: 0.5rem;
   padding: 2rem 1rem;
   text-align: center;
@@ -406,6 +412,10 @@
 }
 
 @media (max-width: 520px) {
+  .vacio-carga {
+    min-height: 240px;
+  }
+
   .pagina {
     padding: 1.25rem 1rem 2rem;
   }
@@ -428,18 +438,6 @@
   background: transparent !important;
   color: var(--tinta) !important;
   border: none !important;
-}
-
-:host ::ng-deep .p-fileupload .p-fileupload-content {
-  background: #fafbfc !important;
-  color: var(--tinta) !important;
-  border: 1.5px dashed #c9d3de !important;
-  border-radius: 12px;
-}
-
-:host ::ng-deep .p-fileupload .p-fileupload-content.p-fileupload-highlight {
-  background: var(--acento-suave) !important;
-  border-color: var(--acento) !important;
 }
 
 .archivo-datos strong,

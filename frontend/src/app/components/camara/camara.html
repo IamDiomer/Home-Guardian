@@ -8,10 +8,9 @@
   <div class="elegir-camara"><label for="selectorCamara"><i class="pi pi-video" aria-hidden="true"></i> Fuente de cámara</label>
   <p-select inputId="selectorCamara" [options]="opcionesCamara" [(ngModel)]="camaraSeleccionada" optionLabel="label" optionValue="value" placeholder="Cámara predeterminada" emptyMessage="Sin cámaras disponibles" panelStyleClass="panel-camaras" [disabled]="iniciando" (onChange)="cambiarCamara()" />
   </div>
-  <div class="acciones-camara">
-   @if (!activo) { <p-button label="Iniciar cámara" icon="pi pi-video" [loading]="iniciando" [disabled]="iniciando" (onClick)="iniciarCamara()" /> }
-   @else { <p-button label="Detener cámara" icon="pi pi-stop-circle" severity="danger" (onClick)="detenerCamara()" /> }
-   <p-button label="Guardar resultado" icon="pi pi-save" [outlined]="true" [loading]="guardando" [disabled]="!imagenResultado || guardando" (onClick)="guardarDeteccion()" />
+  <div class="acciones-camara acciones-superiores">
+   <ng-container *ngTemplateOutlet="accionesCamara" />
+   <div class="guardar-escritorio"><ng-container *ngTemplateOutlet="guardarResultado" /></div>
   </div>
  </section>
  <div class="comparacion-camara">
@@ -32,6 +31,15 @@
    @if (imagenResultado) { <div class="resumen-en-vivo"><ng-container *ngTemplateOutlet="detalle; context: { $implicit: resumen }" /></div> }
   </p-card>
  </div>
+ <div class="acciones-camara acciones-movil" role="group" aria-label="Acciones de cámara">
+  <ng-container *ngTemplateOutlet="guardarResultado" />
+ </div>
+ @if (imagenResultado) {
+  <p-card class="tarjeta detalle-deteccion-movil">
+   <ng-template pTemplate="header"><div class="tarjeta-cabecera"><i class="pi pi-chart-bar" aria-hidden="true"></i><div><h2>Detalle de la detección</h2></div></div></ng-template>
+   <ng-container *ngTemplateOutlet="detalle; context: { $implicit: resumen }" />
+  </p-card>
+ }
   <!-- Detecciones guardadas: imagen y debajo su detalle -->
   @if (imagenesGuardadas.length > 0) {
     <p-card class="tarjeta tarjeta-historial">
@@ -92,6 +100,15 @@
     </p-card>
   }
 </div>
+
+<ng-template #accionesCamara>
+ @if (!activo) { <p-button label="Iniciar cámara" icon="pi pi-video" [loading]="iniciando" [disabled]="iniciando" (onClick)="iniciarCamara()" /> }
+ @else { <p-button label="Detener cámara" icon="pi pi-stop-circle" severity="danger" (onClick)="detenerCamara()" /> }
+</ng-template>
+
+<ng-template #guardarResultado>
+ <p-button label="Guardar resultado" icon="pi pi-save" [outlined]="true" [loading]="guardando" [disabled]="!imagenResultado || guardando" (onClick)="guardarDeteccion()" />
+</ng-template>
 
 <!-- Detalle reutilizable: métricas, clases y lista con confianza -->
 <ng-template #detalle let-r>

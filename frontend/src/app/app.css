@@ -9,3 +9,66 @@
 :host:has(app-inicio) .contenido{max-width:none;flex:1;display:flex;flex-direction:column;padding:22px 4vw 18px}:host:has(app-inicio) .contenido>router-outlet{display:none}:host:has(app-inicio) .pie{padding-top:12px;padding-bottom:12px;margin-left:4vw;margin-right:4vw}@media(max-width:650px){:host:has(app-inicio) .contenido{padding:20px 16px 18px}}
 
 :host:has(app-inicio) .contenido{max-width:1440px;margin-left:auto;margin-right:auto;padding-left:clamp(24px,5vw,72px);padding-right:clamp(24px,5vw,72px)}@media(max-width:650px){:host:has(app-inicio) .contenido{padding-left:20px;padding-right:20px}}
+
+nav .icono-inicio{display:none}
+
+/* Keep the footer at the bottom on every route, including short pages. */
+:host{display:flex;flex-direction:column;min-height:100dvh}
+.barra,.pie{flex-shrink:0}
+.contenido{flex:1;width:100%;min-width:0;margin:0 auto}
+.pie{margin-top:auto}
+
+/* Keep primary destinations within thumb reach on phones. */
+@media(max-width:1000px){
+  :host{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+  .barra{gap:12px;padding:12px 16px;border-bottom-width:1px;flex-wrap:nowrap}
+  .marca{gap:9px;min-width:0}
+  .marca strong{font-size:clamp(16px,3.8vw,23px);letter-spacing:-.6px;white-space:nowrap}
+  .emblema{width:34px;height:36px;font-size:20px;flex-shrink:0}
+  .conexion{max-width:125px;font-size:11px;gap:6px;line-height:1.4}
+  .conexion b{width:6px;height:6px}
+  nav{
+    position:fixed;
+    inset:auto 0 0;
+    z-index:1001;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    width:auto;
+    max-width:none;
+    margin:0;
+    gap:4px;
+    padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));
+    background:rgba(255,255,255,.97);
+    border:0;
+    border-top:1px solid #e4dad3;
+    border-radius:0;
+    box-shadow:0 -8px 32px #4b291b0d;
+  }
+  nav a{
+    position:relative;
+    min-width:0;
+    min-height:60px;
+    flex-direction:column;
+    justify-content:center;
+    gap:7px;
+    padding:8px 2px;
+    border:0;
+    border-radius:15px;
+    color:#69605a;
+    font-size:11px;
+    font-weight:600;
+    line-height:1.2;
+    text-align:center;
+    transition:background-color .18s ease,color .18s ease;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  nav a i,nav .icono-inicio{display:block;font-size:21px}
+  nav a.activo{background:#f7e9e3;color:#96311f;border-color:transparent}
+  nav a.activo::before{content:"";position:absolute;top:0;width:20px;height:3px;border-radius:0 0 4px 4px;background:#ab3925}
+  nav a:hover{background:#f8f2ed;color:#7f291a}
+  nav a.activo:hover{background:#f2ddd3;color:#96311f}
+  nav a:focus-visible{outline-offset:0}
+  #contenido{scroll-margin-top:90px}
+}
+@media(prefers-reduced-motion:reduce){nav a{transition:none}}

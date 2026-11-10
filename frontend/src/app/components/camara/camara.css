@@ -1,3 +1,44 @@
+.guardar-escritorio {
+  display: contents;
+}
+
+.detalle-deteccion-movil,
+.acciones-camara.acciones-movil {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .tarjeta-deteccion .resumen-en-vivo {
+    display: none;
+  }
+
+  .detalle-deteccion-movil {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .guardar-escritorio {
+    display: none;
+  }
+
+  .acciones-camara.acciones-superiores {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .acciones-camara.acciones-movil {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 580px) {
+  .acciones-camara.acciones-movil {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 :host {
   --tinta: #2c302b;
   --tinta-suave: #5b5143;

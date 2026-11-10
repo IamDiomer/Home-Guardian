@@ -1,7 +1,11 @@
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
   <a class="marca" routerLink="/inicio"><span class="emblema"><i class="pi pi-home" aria-hidden="true"></i></span><span><strong>HOME GUARDIAN</strong><small>DETECCIÓN DE HUMO Y FUEGO</small></span></a>
-  <nav aria-label="Navegación principal"><a routerLink="/inicio" routerLinkActive="activo">Vista general</a><a routerLink="/camara" routerLinkActive="activo"><i class="pi pi-video" aria-hidden="true"></i> Cámara en vivo</a><a routerLink="/imagen" routerLinkActive="activo"><i class="pi pi-image" aria-hidden="true"></i> Analizar imagen</a></nav>
+  <nav aria-label="Navegación principal">
+    <a routerLink="/inicio" routerLinkActive="activo" ariaCurrentWhenActive="page"><i class="pi pi-home icono-inicio" aria-hidden="true"></i><span>Vista general</span></a>
+    <a routerLink="/camara" routerLinkActive="activo" ariaCurrentWhenActive="page"><i class="pi pi-video" aria-hidden="true"></i><span>Cámara en vivo</span></a>
+    <a routerLink="/imagen" routerLinkActive="activo" ariaCurrentWhenActive="page"><i class="pi pi-image" aria-hidden="true"></i><span>Analizar imagen</span></a>
+  </nav>
   <span class="conexion" [class.conectado]="conectado" role="status"><b></b>{{ estado }}</span>
 </header>
 <main id="contenido" class="contenido"><router-outlet /></main>
